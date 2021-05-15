@@ -1,0 +1,20 @@
+{
+    "name": "alexstewartja/ical-parser-php",
+    "description": "A concise PHP library for parsing the iCal calendar format, whether file-based (.ics) or from a hosted URL.",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Alex Stewart",
+            "email": "iamalexstewart@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-0": {
+            "iCalPhpParser": "src/"
+        }
+    }
+}
