@@ -98,22 +98,22 @@ class iCal_Event
     }
 
 
-    public function summary(): string
+    public function summary(): ?string
     {
         return $this->summary;
     }
 
-    public function title(): string
+    public function title(): ?string
     {
         return $this->summary;
     }
 
-    public function description(): string
+    public function description(): ?string
     {
         return $this->description;
     }
 
-    public function occurrences(): array
+    public function occurrences(): ?array
     {
         if (empty($this->_occurrences)) {
             $this->_occurrences = $this->_calculateOccurrences();
@@ -121,11 +121,9 @@ class iCal_Event
         return $this->_occurrences;
     }
 
-    public function duration(): int
+    public function duration(): ?int
     {
-        // if ($this->_timeEnd) {
         return $this->_timeEnd - $this->_timeStart;
-        // }
     }
 
     public function parse($content): iCal_Event
@@ -263,7 +261,7 @@ class iCal_Event
         return in_array($date, $this->exdate);
     }
 
-    protected function _calculateOccurrences(): array
+    protected function _calculateOccurrences(): ?array
     {
         $occurrences = array($this->_timeStart);
 

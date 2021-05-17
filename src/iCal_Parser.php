@@ -1,11 +1,14 @@
 <?php
 
-
 namespace iCalPhpParser;
-
 
 class iCal_Parser
 {
+    /**
+     * @var string
+     */
+    public $prodid;
+
     /**
      * @var string
      */
@@ -15,6 +18,11 @@ class iCal_Parser
      * @var string
      */
     public $description;
+
+    /**
+     * @var string
+     */
+    public $content;
 
     /**
      * @var array
@@ -40,22 +48,32 @@ class iCal_Parser
     }
 
 
-    public function title(): string
+    public function prodid(): ?string
+    {
+        return $this->prodid;
+    }
+
+    public function title(): ?string
     {
         return $this->title;
     }
 
-    public function description(): string
+    public function description(): ?string
     {
         return $this->description;
     }
 
-    public function events(): array
+    public function content(): ?string
+    {
+        return $this->content;
+    }
+
+    public function events(): ?array
     {
         return $this->events;
     }
 
-    public function eventsByDate(): array
+    public function eventsByDate(): ?array
     {
         if (! $this->_eventsByDate) {
             $this->_eventsByDate = array();
@@ -100,7 +118,7 @@ class iCal_Parser
         return $this->_eventsByDate;
     }
 
-    public function eventsByDateBetween($start, $end, int $limit=NULL): array
+    public function eventsByDateBetween($start, $end, int $limit=NULL): ?array
     {
         if ((string) (int) $start !== (string) $start) {
             $start = strtotime($start);
@@ -127,7 +145,7 @@ class iCal_Parser
         return $return;
     }
 
-    public function eventsByDateSince($start, int $limit=NULL): array
+    public function eventsByDateSince($start, int $limit=NULL): ?array
     {
         if ((string) (int) $start !== (string) $start) {
             $start = strtotime($start);
@@ -149,7 +167,7 @@ class iCal_Parser
         return $return;
     }
 
-    public function eventsByDateUntil($end, int $limit=NULL): array
+    public function eventsByDateUntil($end, int $limit=NULL): ?array
     {
         if ((string) (int) $end !== (string) $end) {
             $end = strtotime($end);
@@ -174,6 +192,11 @@ class iCal_Parser
     public function parse($content): iCal_Parser
     {
         $content = str_replace("\r\n ", '', $content);
+        $this->content = $content;
+
+        // ProdId
+        preg_match('`^PRODID:-//(.*)//(.*)$`m', $content, $m);
+        $this->prodid = $m ? trim($m[1]) : null;
 
         // Title
         preg_match('`^X-WR-CALNAME:(.*)$`m', $content, $m);
