@@ -12,6 +12,11 @@ class iCal_Event
     /**
      * @var string
      */
+    private $content;
+
+    /**
+     * @var string
+     */
     public $uid;
 
     /**
@@ -97,6 +102,10 @@ class iCal_Event
         }
     }
 
+    public function content(): ?string
+    {
+        return $this->content;
+    }
 
     public function summary(): ?string
     {
@@ -129,6 +138,8 @@ class iCal_Event
     public function parse($content): iCal_Event
     {
         $content = str_replace("\r\n ", '', $content);
+
+        $this->content = $content;
 
         // UID
         if (preg_match('`^UID:(.*)$`m', $content, $m))

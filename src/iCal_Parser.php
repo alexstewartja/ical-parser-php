@@ -68,11 +68,17 @@ class iCal_Parser
         return $this->content;
     }
 
+    /**
+     * @return iCal_Event[]|null
+     */
     public function events(): ?array
     {
         return $this->events;
     }
 
+    /**
+     * @return iCal_Event[]|null
+     */
     public function eventsByDate(): ?array
     {
         if (! $this->_eventsByDate) {
@@ -192,6 +198,7 @@ class iCal_Parser
     public function parse($content): iCal_Parser
     {
         $content = str_replace("\r\n ", '', $content);
+
         $this->content = $content;
 
         // ProdId
